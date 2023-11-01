@@ -39,3 +39,14 @@ class Feeding(models.Model):
 
   class Meta:
     ordering = ['-date']
+
+
+class Held_Item(models.Model):
+  name = models.CharField(max_length=50)
+  color = models.CharField(max_length=20)
+
+  def __str__(self):
+    return self.name
+
+  def get_absolute_url(self):
+    return reverse('held-item-detail', kwargs={'pk': self.id})

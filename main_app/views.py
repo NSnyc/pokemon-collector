@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
 from main_app.models import Pokemon
-from .models import Pokemon
+from .models import Pokemon, Held_Item
 from .forms import FeedingForm
 
+class Held_ItemCreate(CreateView):
+  model = Held_Item
+  fields = '__all__'
 
 def home(request):
   return render(request, 'home.html')
