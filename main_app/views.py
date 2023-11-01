@@ -1,13 +1,28 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from django.http import HttpResponse
 from main_app.models import Pokemon
 from .models import Pokemon, Held_Item
 from .forms import FeedingForm
 
+class Held_ItemList(ListView):
+  model = Held_Item
+
+class Held_ItemDetail(DetailView):
+  model = Held_Item
+
 class Held_ItemCreate(CreateView):
   model = Held_Item
   fields = '__all__'
+
+class Held_ItemUpdate(UpdateView):
+  model = Held_Item
+  fields = ['name', 'color']
+
+class Held_ItemDelete(DeleteView):
+  model = Held_Item
+  success_url = '/items/'
 
 def home(request):
   return render(request, 'home.html')

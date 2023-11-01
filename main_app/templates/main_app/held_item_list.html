@@ -1,0 +1,36 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/items/held-item-index.css' %}"
+/>
+{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+  <h1>All Pokémon Held Items</h1>
+  <img src="{% static 'images/power-bracer.png' %}" alt="A Power Bracer"/>
+  <img src="{% static 'images/lucky-punch.png' %}" alt="A Lucky Punch"/>
+  <img src="{% static 'images/focus-sash.png' %}" alt="A Focus Sash"/>
+  <img src="{% static 'images/soothe-bell.png' %}" alt="A Soothe Bell"/>
+</section>
+
+<section class="card-container">
+  {% for held_item in held_item_list %}
+  <div class="card" style="border-color: {{ toy.color }}">
+    <div class="card-bg" style="background-color: {{ held_item.color }}"></div>
+    <a href="{% url 'held-item-detail' held_item.id %}">
+      <div class="card-content">
+        <h2>{{ held_item.name }}</h2>
+        <p>A {{ held_item.color }} held item</p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</section>
+
+{% endblock %}
