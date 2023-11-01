@@ -26,6 +26,10 @@
       <h2>A {{ pokemon.breed }} baby.</h2>
     {% endif %}
     <p>{{ pokemon.description }}</p>
+    <div class="pokemon-actions">
+      <a href="{% url 'pokemon-update' pokemon.id %}" class="btn warn">Edit</a>
+      <a href="{% url 'pokemon-delete' pokemon.id %}" class="btn danger">Delete</a>
+    </div>
   </div>
 </section>
 

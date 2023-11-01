@@ -8,7 +8,11 @@
 {% block content %}
 
 <div class="page-header">
-  <h1>Catch a Pokémon</h1>
+  {% if pokemon %}
+    <h1>Edit {{ pokemon.name }}</h1>
+  {% else %}
+    <h1>Catch a Pokémon</h1>
+  {% endif %}
   <img src="{% static 'images/pokeball-lg.png' %}" alt="A large pokeball"/>
 </div>
 
