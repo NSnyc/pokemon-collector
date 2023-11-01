@@ -66,6 +66,11 @@
       class="subsection-content"
 			autocomplete="off"
     >
+      {% if pokemon.fed_for_today %}
+        <p class="fed">{{pokemon.name}}'s friendship has increased!</p>
+      {% else %}
+        <p class="unfed">{{pokemon.name}} might be hungry!</p>
+      {% endif %}
       {% csrf_token %}
       {{ feeding_form.as_p }}
       <button type="submit" class="btn submit">Add Feeding</button>
