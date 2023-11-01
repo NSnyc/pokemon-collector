@@ -9,5 +9,5 @@ urlpatterns = [
   path('pokemon/create/', views.PokemonCreate.as_view(), name='pokemon-create'),
   path('pokemon/<int:pk>/update/', views.PokemonUpdate.as_view(), name='pokemon-update'),
   path('pokemon/<int:pk>/delete/', views.PokemonDelete.as_view(), name='pokemon-delete'),
-  
+  path('pokemon/<int:pokemon_id>/add_feeding/', views.add_feeding, name='add-feeding'),
 ]

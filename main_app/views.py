@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponse
-from .models import Pokemon
 from main_app.models import Pokemon
+from .models import Pokemon
+from .forms import FeedingForm
 
 
 def home(request):
@@ -17,7 +18,10 @@ def pokemon_index(request):
 
 def pokemon_detail(request, pokemon_id):
   pokemon = Pokemon.objects.get(id=pokemon_id)
-  return render(request, 'pokemon/detail.html', {'pokemon': pokemon})
+  feeding_form = FeedingForm()
+  return render(request, 'pokemon/detail.html', {
+    'pokemon': pokemon, 'feeding_form': feeding_form
+  })
 
 class PokemonCreate(CreateView):
   model = Pokemon
@@ -31,3 +35,11 @@ class PokemonUpdate(UpdateView):
 class PokemonDelete(DeleteView):
   model = Pokemon
   success_url = '/pokemon/'
+
+def add_feeding(request, pokemon_id):
+  form = FeedingForm(request.POST)
+  if form.is_valid():
+    new_feeding = form.save(commit=False)
+    new_feeding.pokemon_id = pokemon_id
+    new_feeding.save()
+  return redirect('pokemon-detail', pokemon_id=pokemon_id)
