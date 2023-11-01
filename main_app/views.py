@@ -4,9 +4,9 @@ from django.http import HttpResponse
 
 # Add the Pokemon class & list and view function below the imports
 class Pokemon:  # Note that parens are optional if not inheriting from another class
-  def __init__(self, name, temperment, description, age):
+  def __init__(self, name, breed, description, age):
     self.name = name
-    self.temperment = temperment
+    self.breed = breed
     self.description = description
     self.age = age
 
@@ -19,7 +19,7 @@ pokemon = [
 
 # Define the home view
 def home(request):
-  return HttpResponse('<h1>Hello Future Champions! ᓚᘏᗢ</h1>')
+  return render(request, 'home.html')
 
 def about(request):
   return render(request, 'about.html')
