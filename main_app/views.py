@@ -4,26 +4,28 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from main_app.models import Pokemon
 from .models import Pokemon, Held_Item
 from .forms import FeedingForm
 
-class Held_ItemList(ListView):
+class Held_ItemList(LoginRequiredMixin, ListView):
   model = Held_Item
 
-class Held_ItemDetail(DetailView):
+class Held_ItemDetail(LoginRequiredMixin, DetailView):
   model = Held_Item
 
-class Held_ItemCreate(CreateView):
+class Held_ItemCreate(LoginRequiredMixin, CreateView):
   model = Held_Item
   fields = '__all__'
 
-class Held_ItemUpdate(UpdateView):
+class Held_ItemUpdate(LoginRequiredMixin, UpdateView):
   model = Held_Item
   fields = ['name', 'color']
 
-class Held_ItemDelete(DeleteView):
+class Held_ItemDelete(LoginRequiredMixin, DeleteView):
   model = Held_Item
   success_url = '/items/'
 
@@ -33,10 +35,12 @@ class Home(LoginView):
 def about(request):
   return render(request, 'about.html')
 
+@login_required
 def pokemon_index(request):
-  pokemon=Pokemon.objects.all()
+  pokemon=Pokemon.objects.filter(user=request.user)
   return render(request, 'pokemon/index.html', {'pokemon': pokemon})
 
+@login_required
 def pokemon_detail(request, pokemon_id):
   pokemon = Pokemon.objects.get(id=pokemon_id)
   held_items_pokemon_doesnt_have = Held_Item.objects.exclude(id__in = pokemon.held_items.all().values_list('id'))
@@ -45,7 +49,7 @@ def pokemon_detail(request, pokemon_id):
     'pokemon': pokemon, 'feeding_form': feeding_form, 'held_items': held_items_pokemon_doesnt_have
   })
 
-class PokemonCreate(CreateView):
+class PokemonCreate(LoginRequiredMixin, CreateView):
   model = Pokemon
   fields = ['name', 'breed', 'description', 'age']
   success_url = '/pokemon/'
@@ -54,11 +58,11 @@ class PokemonCreate(CreateView):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
-class PokemonUpdate(UpdateView):
+class PokemonUpdate(LoginRequiredMixin, UpdateView):
   model = Pokemon
   fields = ['breed', 'description', 'age']
 
-class PokemonDelete(DeleteView):
+class PokemonDelete(LoginRequiredMixin, DeleteView):
   model = Pokemon
   success_url = '/pokemon/'
 
@@ -70,6 +74,7 @@ def add_feeding(request, pokemon_id):
     new_feeding.save()
   return redirect('pokemon-detail', pokemon_id=pokemon_id)
 
+@login_required
 def assoc_item(request, pokemon_id, held_item_id):
   Pokemon.objects.get(id=pokemon_id).held_items.add(held_item_id)
   return redirect('pokemon-detail', pokemon_id=pokemon_id)
