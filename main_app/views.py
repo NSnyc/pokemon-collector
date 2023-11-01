@@ -36,9 +36,10 @@ def pokemon_index(request):
 
 def pokemon_detail(request, pokemon_id):
   pokemon = Pokemon.objects.get(id=pokemon_id)
+  held_items_pokemon_doesnt_have = Held_Item.objects.exclude(id__in = pokemon.held_items.all().values_list('id'))
   feeding_form = FeedingForm()
   return render(request, 'pokemon/detail.html', {
-    'pokemon': pokemon, 'feeding_form': feeding_form
+    'pokemon': pokemon, 'feeding_form': feeding_form, 'held_items': held_items_pokemon_doesnt_have
   })
 
 class PokemonCreate(CreateView):
@@ -60,4 +61,8 @@ def add_feeding(request, pokemon_id):
     new_feeding = form.save(commit=False)
     new_feeding.pokemon_id = pokemon_id
     new_feeding.save()
+  return redirect('pokemon-detail', pokemon_id=pokemon_id)
+
+def assoc_item(request, pokemon_id, held_item_id):
+  Pokemon.objects.get(id=pokemon_id).held_items.add(held_item_id)
   return redirect('pokemon-detail', pokemon_id=pokemon_id)

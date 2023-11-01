@@ -6,9 +6,10 @@
   justify-content: center;
 }
 
-.pokemon-img {
+.pokemon-img img {
   width: 75%;
   max-width: 350px;
+  
 }
 
 .usr-img {
@@ -30,6 +31,15 @@
   padding-bottom: 20px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 10px;
+  padding: 5px;
+  justify-content: space-between;
 }
 
 .subsection-title {
