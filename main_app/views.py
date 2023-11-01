@@ -43,7 +43,7 @@ def pokemon_detail(request, pokemon_id):
 
 class PokemonCreate(CreateView):
   model = Pokemon
-  fields = '__all__'
+  fields = ['name', 'breed', 'description', 'age']
   success_url = '/pokemon/'
 
 class PokemonUpdate(UpdateView):

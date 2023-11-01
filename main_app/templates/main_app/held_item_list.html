@@ -21,7 +21,7 @@
 
 <section class="card-container">
   {% for held_item in held_item_list %}
-  <div class="card" style="border-color: {{ toy.color }}">
+  <div class="card" style="border-color: {{ held_item.color }}">
     <div class="card-bg" style="background-color: {{ held_item.color }}"></div>
     <a href="{% url 'held-item-detail' held_item.id %}">
       <div class="card-content">
