@@ -22,7 +22,7 @@
 <section class="card-container">
   {% for pokemon in pokemon %}
     <div class="card">
-      <a href="{{ url 'pokemon-detail' pokemon.id }}">
+      <a href="{% url 'pokemon-detail' pokemon.id %}">
         <div class="card-content">
           <div class="card-img-container">
             <img 
