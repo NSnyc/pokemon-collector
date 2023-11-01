@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from main_app.models import Pokemon
 from .models import Pokemon, Held_Item
@@ -24,8 +27,8 @@ class Held_ItemDelete(DeleteView):
   model = Held_Item
   success_url = '/items/'
 
-def home(request):
-  return render(request, 'home.html')
+class Home(LoginView):
+  template_name = 'home.html'
 
 def about(request):
   return render(request, 'about.html')
@@ -46,6 +49,10 @@ class PokemonCreate(CreateView):
   model = Pokemon
   fields = ['name', 'breed', 'description', 'age']
   success_url = '/pokemon/'
+  
+  def form_valid(self, form):
+    form.instance.user = self.request.user
+    return super().form_valid(form)
 
 class PokemonUpdate(UpdateView):
   model = Pokemon
@@ -66,3 +73,17 @@ def add_feeding(request, pokemon_id):
 def assoc_item(request, pokemon_id, held_item_id):
   Pokemon.objects.get(id=pokemon_id).held_items.add(held_item_id)
   return redirect('pokemon-detail', pokemon_id=pokemon_id)
+
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      user = form.save()
+      login(request, user)
+      return redirect('cat-index')
+    else:
+      error_message = 'Invalid sign up - try again'
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'signup.html', context)
