@@ -10,7 +10,7 @@ main > section {
   width: 100%;
   padding: 10px 8px;
   display: flex;
-  align-items: center;
+  /* align-items:start; */
   justify-content: center;
   flex-direction: column;
 }
@@ -22,6 +22,8 @@ main > section {
 .logo-container {
   max-width: 375px;
 }
+
+
 
 .pokemon-container {
   width: 80%;
@@ -89,3 +91,4 @@ main > section {
   height: 400px;
   width: 300px;
 }
+
