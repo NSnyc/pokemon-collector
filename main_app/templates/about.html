@@ -1,11 +1,36 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
-<h1>About the Pokémon Collector</h1>
+<h2>About the Pokémon Collector</h2>
 <hr />
 <p class="page-content">
-  Gotta Catch 'Em All!
+  Welcome to <strong>PokeBuddy</strong>, a Python-based haven for Pokémon collectors! This application is designed to enhance your Pokémon collecting experience, giving you the tools to personalize and interact with your Pokémon in various ways. Embrace the journey of a Pokémon trainer and create lasting bonds with your Pokémon companions.
+</p>
+
+
+<p class="page-content">
+  <h1>Key Features:</h1>
+  <ul>
+    <li>Collect various Pokémon and add them to your personal Pokédex.</li>
+    <li>Name your Pokémon and give them unique characteristics.</li>
+    <li>Add personalized descriptions and set their ages.</li>
+    <li>Craft and assign unique items for your Pokémon to hold.</li>
+    <li>Feed your Pokémon to foster friendship and loyalty.</li>
+  </ul>
+</p>
+
+
+<p class="page-content">
+  This application is brought to you by a developer with a strong background in creating intuitive and enjoyable software experiences. Join us on this exciting journey and become the ultimate Pokémon Collector!
+</p>
+
+<p class="dev-img">
+  <img 
+    src="{% static 'images/enes.png' %}"
+    alt="The Developer"
+    class="dev-img"
+  >
 </p>
 
 {% endblock %}

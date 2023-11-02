@@ -275,3 +275,13 @@ nav li {
     }
   }
 }
+
+li {
+  font-size: var(--font-reg);
+}
+
+.dev-img {
+  height: 100px;
+  width: 100px;
+  left: 100px;
+}
